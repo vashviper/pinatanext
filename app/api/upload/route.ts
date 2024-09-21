@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import PinataSDK from '@pinata/sdk';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
+import { unlink } from 'fs/promises';
 
 const pinata = new PinataSDK({ pinataJWTKey: process.env.PINATA_JWT });
+
 
 export async function POST(req: NextRequest) {
   try {
