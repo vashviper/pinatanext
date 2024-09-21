@@ -21,8 +21,9 @@ Then, set up your environment variables by creating a `.env.local` file in the r
 
 ```
 PINATA_JWT=your_pinata_jwt_token
+PINATA_API_KEY=your_pinata_api_key
+PINATA_API_SECRET=your_pinata_api_secret
 PINATA_GATEWAY=your_pinata_gateway_url
-NEXT_PUBLIC_GATEWAY_URL=your_public_gateway_url
 ```
 
 To run the development server:
