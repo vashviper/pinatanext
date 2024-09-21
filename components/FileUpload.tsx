@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import axios, { AxiosError } from 'axios';
-import styles from '../styles/FileUpload.module.css';
+import axios from 'axios';
+import styles from './FileUpload.module.css';
 
 const FileUpload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [genre, setGenre] = useState('');
   const [uploading, setUploading] = useState(false);
   const [ipfsHash, setIpfsHash] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -54,11 +57,66 @@ const FileUpload: React.FC = () => {
   };
 
   return (
-    <div className={styles.fileUpload}>
-      <h1>Upload File to IPFS</h1>
-      <input type="file" accept=".txt,.pdf" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={!file || uploading}>
-        {uploading ? 'Uploading...' : 'Upload to IPFS'}
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+      <h1 className="text-2xl font-bold mb-6 text-center">Upload Your Story</h1>
+      <div className="mb-4">
+        <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+          Title
+        </label>
+        <input
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+          Description
+        </label>
+        <textarea
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          rows={3}
+        ></textarea>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="genre" className="block text-sm font-medium text-gray-700 mb-1">
+          Genre
+        </label>
+        <select
+          id="genre"
+          value={genre}
+          onChange={(e) => setGenre(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Select a genre</option>
+          <option value="fiction">Fiction</option>
+          <option value="non-fiction">Non-fiction</option>
+          <option value="poetry">Poetry</option>
+          <option value="drama">Drama</option>
+        </select>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 mb-1">
+          Choose File
+        </label>
+        <input
+          type="file"
+          id="file-upload"
+          onChange={handleFileChange}
+          className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+        />
+      </div>
+      <button
+        onClick={handleUpload}
+        className={styles.uploadButton}
+        disabled={!file}
+      >
+        Upload Story
       </button>
       {error && <p className={styles.error}>{error}</p>}
       {ipfsHash && (
