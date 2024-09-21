@@ -1,0 +1,94 @@
+# Next.js IPFS Upload Project with Pinata
+
+## Project Overview
+
+Create a Next.js application that allows users to upload text (.txt) or PDF (.pdf) files to IPFS using Pinata's pinning service. The application should have a simple, user-friendly interface and handle the upload process securely.
+
+## Key Features
+
+1. File selection for .txt and .pdf files
+2. File upload to IPFS via Pinata
+3. Display of the IPFS link after successful upload
+4. Error handling and user feedback
+
+## Technical Requirements
+
+- Next.js for the frontend and API routes
+- React for building the user interface
+- Pinata SDK for interacting with IPFS
+- Environment variables for storing Pinata API keys securely
+
+## Implementation Steps
+
+### 1. Set up the Next.js project
+
+- Initialize a new Next.js project
+- Install necessary dependencies:
+  ```
+  npm install @pinata/sdk axios
+  ```
+
+### 2. Create the frontend component
+
+- Create a new file: `components/FileUpload.js`
+- Implement a React component with:
+  - File input for selecting .txt or .pdf files
+  - Upload button
+  - State management for file, upload process, and result
+  - Error handling and user feedback
+
+### 3. Implement the API route
+
+- Create a new file: `pages/api/upload.js`
+- Implement an API route that:
+  - Receives the file from the frontend
+  - Uses Pinata SDK to upload the file to IPFS
+  - Returns the IPFS URL of the uploaded file
+
+### 4. Set up environment variables
+
+- Create a `.env.local` file in the project root
+- Add Pinata API keys:
+  ```
+  PINATA_API_KEY=your_pinata_api_key
+  PINATA_SECRET_API_KEY=your_pinata_secret_key
+  ```
+
+### 5. Integrate the frontend and API
+
+- Use the FileUpload component in `pages/index.js`
+- Ensure the frontend component sends requests to the API route
+
+### 6. Style the application
+
+- Use CSS modules or a styling solution of your choice to make the interface user-friendly and responsive
+
+### 7. Error Handling and Validation
+
+- Implement client-side validation for file types
+- Handle and display errors from both client and server sides
+
+### 8. Testing
+
+- Write unit tests for the React component
+- Write integration tests for the API route
+
+## Additional Considerations
+
+- Implement file size limits
+- Add a loading indicator for the upload process
+- Consider adding a preview for text files before upload
+
+## Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Pinata SDK Documentation](https://github.com/PinataCloud/Pinata-SDK)
+- [React Documentation](https://reactjs.org/docs)
+
+## Deliverables
+
+- A functional Next.js application with the described features
+- Clear, well-commented code
+- A README.md file with setup and running instructions
+
+Remember to follow best practices for React and Next.js development, and ensure all interactions with Pinata's API are secure and efficient.
