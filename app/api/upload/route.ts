@@ -6,6 +6,7 @@ import { unlink } from 'fs/promises';
 
 const pinata = new PinataSDK({ pinataJWTKey: process.env.PINATA_JWT });
 
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -20,7 +21,6 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(bytes);
     const tempPath = join('/tmp', file.name);
     await writeFile(tempPath, buffer);
-
     // Upload to IPFS
     const readableStream = require('fs').createReadStream(tempPath);
     const result = await pinata.pinFileToIPFS(readableStream, {
@@ -28,13 +28,15 @@ export async function POST(req: NextRequest) {
         name: file.name,
       },
     });
-
     // Clean up the temporary file
     await unlink(tempPath);
 
-    return NextResponse.json({ success: true, result: { IpfsHash: result.IpfsHash } });
+    return NextResponse.json({ success: true, ipfsHash: result.IpfsHash });
   } catch (error) {
     console.error('Error uploading to IPFS:', error);
-    return NextResponse.json({ success: false, error: 'Error uploading to IPFS' }, { status: 500 });
+    return NextResponse.json({ 
+      success: false, 
+      error: 'Error uploading to IPFS' 
+    }, { status: 500 });
   }
 }
