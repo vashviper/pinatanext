@@ -32,17 +32,20 @@ const FileUpload: React.FC = () => {
 
     try {
       const response = await axios.post('/api/upload', formData);
+      console.log('Server response:', response.data);
       if (response.data.success) {
         console.log('File uploaded successfully:', response.data.result);
         setIpfsHash(response.data.result.IpfsHash);
       } else {
-        throw new Error(response.data.error || 'Upload failed');
+        console.error('Upload failed:', response.data);
+        throw new Error(response.data.error || 'Upload failed: Unexpected server response');
       }
     } catch (error: unknown) {
       console.error('Upload error:', error);
       let errorMessage = 'An error occurred while uploading the file.';
-      if (axios.isAxiosError(error) && error.response) {
-        errorMessage = error.response.data?.error || error.message;
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error:', error.response?.data);
+        errorMessage = error.response?.data?.error || error.message;
       } else if (error instanceof Error) {
         errorMessage = error.message;
       }
@@ -65,7 +68,7 @@ const FileUpload: React.FC = () => {
           <p>File uploaded successfully!</p>
           <p>IPFS Hash: {ipfsHash}</p>
           <a
-            href={`https://${process.env.NEXT_PUBLIC_GATEWAY_URL}/ipfs/${ipfsHash}`}
+            href={`https://${process.env.PINATA_GATEWAY}/ipfs/${ipfsHash}`}
             target="_blank"
             rel="noopener noreferrer"
           >
