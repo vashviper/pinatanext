@@ -66,7 +66,7 @@ const FileUpload: React.FC = () => {
           <p>File uploaded successfully!</p>
           <p>IPFS Hash: {ipfsHash}</p>
           <a
-            href={`htttps://${process.env.PINATA_GATEWAY}/ipfs/${ipfsHash}`}
+            href={`https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY}/ipfs/${ipfsHash}`}
             target="_blank"
             rel="noopener noreferrer"
           >
